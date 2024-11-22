@@ -656,5 +656,36 @@ const products = [
       "apparel",
       "mens"
     ]
+  },
+  {
+    id: "bc2847e9-5323-403f",
+    image: "images/products/backpack.jpg",
+    name: "Men's Full-Zip Backpack",
+    rating: {
+      stars: 4.5,
+      count: 3157
+    },
+    priceCents: 2400,
+    keywords: [
+      "bags",
+      "backpack",
+      "mens"
+    ]
+  },
+  {
+    id: "bc2847e9-5323",
+    image: "images/products/umbrella.jpg",
+    name: "Water proof Umbrella",
+    rating: {
+      stars: 4.5,
+      count: 3157
+    },
+    priceCents: 2400,
+    keywords: [
+      "umbrella",
+      "umbrella",
+      "apparel",
+      "umbrella"
+    ]
   }
 ];

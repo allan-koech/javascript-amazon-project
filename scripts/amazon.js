@@ -39,7 +39,7 @@ productsHTML +=` <div class="product-container">
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -52,9 +52,12 @@ productsHTML +=` <div class="product-container">
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
   button.addEventListener('click', ()=>{
-    const productId= button.dataset.productId;
+    const {productId}= button.dataset;
     let matchingItem;
     let quantityOfOrder= document.querySelector(`.js-quantity-selector-${productId}`);
+    const addedToCart= document.querySelector(`.js-added-to-cart-${productId}`);
+   addedToCart.classList.add(`js-added-to-cart`);
+   setTimeout(()=>{ addedToCart.classList.remove(`js-added-to-cart`);},2000)
      cart.forEach((item)=>{
       if(productId=== item.productId){
         matchingItem=item;
