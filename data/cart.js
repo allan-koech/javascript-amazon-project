@@ -37,3 +37,6 @@ export function removeFromCart(productId){
   saveToStorage();
   })
 }
+export function updateQuantity(){
+  document.querySelector('.js-return-to-home-link').innerHTML = `${cart.length} Items`
+}
