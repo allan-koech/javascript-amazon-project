@@ -52,6 +52,19 @@
 .cart-item-container {
   margin-bottom: 12px;
 }
+.quantity-input,
+.save-quantity-link{
+  width: 30px;
+  display: none;
+}
+.is-editing-quantity .quantity-input,
+.is-editing-quantity .save-quantity-link {
+  display: initial;
+}
+
+.is-editing-quantity .quantity-name{
+  display: none;
+}
 
 .payment-summary {
   padding-bottom: 5px;

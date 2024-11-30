@@ -37,6 +37,25 @@ export function removeFromCart(productId){
   saveToStorage();
   })
 }
-export function updateQuantity(){
-  document.querySelector('.js-return-to-home-link').innerHTML = `${cart.length} Items`
+
+export function calculateCartQuantity(){
+  let cartQuantity= 0;
+  cart.forEach((cartItem)=>{
+  cartQuantity+= cartItem.quantity;
+  if(document.title==='Checkout') {document.querySelector('.js-return-to-home-link').innerHTML = `${cartQuantity} Items`
 }
+ else if(document.title==='Amazon Project'){ 
+  document.querySelector('.js-cart-quantity').innerHTML= cartQuantity; 
+  }})}
+  calculateCartQuantity();
+  export function updateQuantity(productId, newQuantity){
+    cart.forEach((cartItem)=>{
+    if(cartItem.productId === productId){
+      cartItem.quantity = newQuantity;
+      document.querySelector(`.js-quantity-label-${productId}`).innerHTML= cartItem.quantity;
+      saveToStorage();
+      calculateCartQuantity();
+    } })  }
+   
+
+ 
