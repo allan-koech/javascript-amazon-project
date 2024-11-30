@@ -117,9 +117,14 @@ document.querySelectorAll('.js-save-quantity-link').forEach(
     link.addEventListener('click', ()=>{
       let newQuantity=0;
       let cartContainerElement = document.querySelector(`.js-cart-item-container-${productId}`)
-      newQuantity= document.querySelector(`.js-quantity-input-${productId}`)
-      updateQuantity(productId, Number(newQuantity.value))
+      newQuantity= Number(document.querySelector(`.js-quantity-input-${productId}`).value)
+      if (newQuantity >0 ){
+      updateQuantity(productId, newQuantity)
       cartContainerElement.classList.remove('is-editing-quantity');
+      } else{
+        alert('Invalid Option');
+      }
+      
       
 
 
