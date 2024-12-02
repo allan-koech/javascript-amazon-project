@@ -1,8 +1,9 @@
 import { calculateCartQuantity, cart, removeFromCart, updateQuantity, updateDeliveryOption} from "../../data/cart.js";
 import {products, getProduct} from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
-import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 console.log()
 export function renderOrderSummary(){
@@ -11,7 +12,7 @@ cart.forEach((cartItem)=>{
 const productId= cartItem.productId;
 const matchingProduct= getProduct(productId);
   cartSummaryHTML +=` <div class="cart-item-container js-cart-item-container-${matchingProduct.id} ">
-            <div class="delivery-date js-delivery-date">
+            <div class="delivery-date js-delivery-date-${matchingProduct.id}">
               Delivery date: Tuesday, June 21
             </div>
 
@@ -81,10 +82,12 @@ document.querySelectorAll('.js-save-quantity-link').forEach(
       newQuantity= Number(document.querySelector(`.js-quantity-input-${productId}`).value)
       if (newQuantity >0 ){
       updateQuantity(productId, newQuantity)
+      renderPaymentSummary();
       cartContainerElement.classList.remove('is-editing-quantity');
       } else{
         alert('Invalid Option');
       }
+      
     })
   }
 )
@@ -97,7 +100,9 @@ deliveryOptions.forEach((deliveryOption)=>{
   const dateString= deliveryDate.format('dddd, MMMM D');
   let priceString=''; 
   if( deliveryOption.priceCents === 0){priceString= 'FREE' } else{ priceString= `$${formatCurrency(deliveryOption.priceCents)}-`; }
+  
   const isChecked = deliveryOption.id == cartItem.deliveryOptionId;
+
   html+= `
         <div class="delivery-option js-delivery-option"
         data-product-id= "${matchingProduct.id}"
@@ -124,8 +129,20 @@ document.querySelectorAll('.js-delivery-option').forEach((element)=>{
 element.addEventListener('click', ()=>{
   const {productId, deliveryOptionId} = element.dataset;
   updateDeliveryOption(productId, deliveryOptionId)
+  
+
   renderOrderSummary();
+  renderPaymentSummary();
 })
 })
 }
 renderOrderSummary();
+
+function updateDeliveryDate(productId, deliveryOptionId){
+  const deliveryOption = getDeliveryOption(deliveryOptionId);
+  const today=dayjs();
+  const deliveryDate= today.add(deliveryOption.deliveryDays, 'days');
+  const dateString= deliveryDate.format('dddd, MMMM D');
+  document.querySelector(`.js-delivery-date-${productId}.innerHTML`)= `Delivery date: ${dateString}`
+}
+
