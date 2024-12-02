@@ -3,7 +3,7 @@ import {products} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
-
+function renderOrderSummary(){
 let cartSummaryHTML= '';
 cart.forEach((cartItem)=>{
   const productId= cartItem.productId;
@@ -15,7 +15,7 @@ cart.forEach((cartItem)=>{
     }
   })
   cartSummaryHTML +=` <div class="cart-item-container js-cart-item-container-${matchingProduct.id} ">
-            <div class="delivery-date">
+            <div class="delivery-date js-delivery-date">
               Delivery date: Tuesday, June 21
             </div>
 
@@ -103,7 +103,7 @@ deliveryOptions.forEach((deliveryOption)=>{
   if( deliveryOption.priceCents === 0){priceString= 'FREE' } else{ priceString= `$${formatCurrency(deliveryOption.priceCents)}-`; }
   const isChecked = deliveryOption.id == cartItem.deliveryOptionId;
   html+= `
-        <div class="delivery-option js-delivery-option"
+        <div class="delivery-option js-delivery-option-${matchingProduct.id}"
         data-product-id= "${matchingProduct.id}"
         data-delivery-option-id= "${deliveryOption.id}">
         <input 
@@ -128,5 +128,8 @@ document.querySelectorAll('.js-delivery-option').forEach((element)=>{
 element.addEventListener('click', ()=>{
   const {productId, deliveryOptionId} = element.dataset;
   updateDeliveryOption(productId, deliveryOptionId)
+  renderOrderSummary();
 })
 })
+}
+renderOrderSummary();
