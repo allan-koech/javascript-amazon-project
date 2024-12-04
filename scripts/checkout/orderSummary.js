@@ -34,7 +34,7 @@ const matchingProduct= getProduct(productId);
                   </span>
                   <input type="number" class="quantity-input js-quantity-input-${matchingProduct.id}">
                   <span class="save-quantity-link link-primary js-save-quantity-link " data-product-id=${matchingProduct.id}>Save</span>
-                  <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
+                  <span class="delete-quantity-link link-primary js-delete-link js-delete-${matchingProduct.id}" data-product-id="${matchingProduct.id}">
                     Delete
                   </span>
                 </div>
@@ -59,6 +59,7 @@ document.querySelectorAll('.js-delete-link').forEach(
   document.querySelector(`.js-cart-item-container-${productId}`);
     container.remove();
     calculateCartQuantity();
+    renderPaymentSummary();
   })
 });
 
