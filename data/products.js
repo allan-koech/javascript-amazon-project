@@ -35,22 +35,19 @@ class Clothing extends Product{
     return `<a href="${this.sizeChartLink}" target= "_blank">Size Chart</a>`
   }
 }
-
-const product1 = new Product({
-  id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-  image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-  name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-  rating: {
-    stars: 4.5,
-    count: 87
-  },
-  priceCents: 1090,
-  keywords: [
-    "socks",
-    "sports",
-    "apparel"
-  ]
-})
+class Appliance extends Product{
+  instructionsLink;
+  warrantyLink;
+  constructor(productDetails){
+    super(productDetails);
+    this.instructionsLink = productDetails.instructionsLink;
+    this.warrantyLink= productDetails.warrantyLink;}
+extraInfoHTML(){
+  return `<p> <a href="${this.instructionsLink}" target= "_blank">Instructions</a>
+           <a href="${this.warrantyLink}" target= "_blank">Warranty</a>
+   </p>`
+}
+}
 
 
 export const products = [
@@ -109,6 +106,9 @@ export const products = [
       count: 2197
     },
     priceCents: 1899,
+    type: 'appliance',
+    warrantyLink: 'images/appliance-warranty.png',
+    instructionsLink: 'images/appliance-warranty.png',
     keywords: [
       "toaster",
       "kitchen",
@@ -745,6 +745,7 @@ export const products = [
   }
 ].map((productDetails)=>{
   if(productDetails.type==="clothing" ) {
-    return new Clothing(productDetails);
-  } else{return new Product(productDetails)};
+  return new Clothing(productDetails);
+  } else if(productDetails.type==="appliance"){ return new Appliance(productDetails)}
+  else{return new Product(productDetails)};
   })
