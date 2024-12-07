@@ -23,7 +23,7 @@ const matchingProduct= getProduct(productId);
                 ${matchingProduct.name}
                 </div>
                 <div class="product-price">
-                 ${matchingProduct.getCurrency()}
+                 ${matchingProduct.getPrice()}
                 </div>
                 <div class="product-quantity">
                   <span class= "quantity-name">

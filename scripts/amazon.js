@@ -23,7 +23,7 @@ productsHTML +=` <div class="product-container">
           </div>
 
           <div class="product-price">
-            ${product.getCurrency()}
+            ${product.getPrice()}
           </div>
 
           <div class="product-quantity-container">
@@ -40,7 +40,7 @@ productsHTML +=` <div class="product-container">
               <option value="10">10</option>
             </select>
           </div>
-
+          ${product.extraInfoHTML()}
           <div class="product-spacer"></div>
 
           <div class="added-to-cart js-added-to-cart-${product.id}">
