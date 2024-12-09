@@ -26,3 +26,10 @@ export function getDeliveryOption(deliveryOptionId){
   })
   return deliveryOption || deliveryOptions[0]
 }
+export async function getDeliveryDay(deliveryOptionId){
+  const today=dayjs();
+  const deliveryDate= today.add(getDeliveryOption(deliveryOptionId).deliveryDays, 'days');
+  const dateString= deliveryDate.format('dddd, MMMM D');
+  
+  }
+  

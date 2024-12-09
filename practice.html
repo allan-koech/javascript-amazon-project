@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Buttons</title>
+</head>
+<body>
+  <div>
+   <p> <input type="radio" class="js-fruit" name="fruit" value="Apple"> Apple</p>
+   <p> <input type="radio" class="js-fruit"name="fruit" value="orange"> orange</p>
+   <p> <input type="radio" class="js-fruit"name="fruit" value="Banana"> Banana</p>
+   <p id="result">Calue of selected radio is <span id="resultClass"></span></p>
+  </div>
+  <div>
+    <p> <input type="radio" name="other" value="Apple"> Apple</p>
+    <p> <input type="radio" name="other" value="orange"> orange</p>
+    <p> <input type="radio" name="other" value="Banana"> Banana</p>
+    <p id="result">Calue of selected radio is <span id="resultClass"></span></p>
+   </div>
+  
+  <script>
+  let radioButtons= document.querySelectorAll("input[name= 'fruit']")
+  radioButtons.forEach((button)=>{
+    button.addEventListener('change', ()=>{
+      console.log(button.value)
+    })
+  })
+  console.log(radioButtons)
+
+/*let radioButtons= document.querySelectorAll("input[name= 'fruit']");
+console.log(radioButtons)
+let result = document.getElementById('result');
+let findSelected = ()=>{
+  let selected= document.querySelector("input[name= 'fruit']:checked")
+  document.getElementById('resultClass').innerHTML = selected.value
+}
+radioButtons.forEach((radioButton)=>{
+radioButton.addEventListener('change', ()=>{
+  findSelected();
+  console.log(radioButtons);
+
+})
+
+})
+*/
+
+
+  </script>
+</body>
+</html>

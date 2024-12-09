@@ -2,15 +2,15 @@ import { cart } from "../../data/cart.js"
 import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
-export function renderPaymentSummary(){
+export async function renderPaymentSummary(){
   let productPriceCents = 0;
   let shippingPriceCents= 0;
-cart.forEach((cartItem) => {
-  const product= getProduct(cartItem.productId);
+for(const cartItem of cart){
+  const product= await getProduct(cartItem.productId);
   productPriceCents += product.priceCents * cartItem.quantity;
   const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
   shippingPriceCents += deliveryOption.priceCents
-})
+}
 const totalBeforeTaxCents = shippingPriceCents+productPriceCents;
 const taxCents= 10 * totalBeforeTaxCents/ 100;
 const totalCents =totalBeforeTaxCents + taxCents;
