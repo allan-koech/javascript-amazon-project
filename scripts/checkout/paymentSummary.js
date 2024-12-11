@@ -2,7 +2,22 @@ import { cart } from "../../data/cart.js"
 import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js"
-import { orders } from "../../data/orders.js";
+
+const orders= [];
+async function updateOrders(newOrder){
+  console.log('origianal orders',orders)
+  console.log('order to be added',newOrder)
+  orders.unshift(newOrder); 
+  console.log('new orders array',orders)
+  localStorage.setItem('orders', JSON.stringify(orders))
+}
+export async function getUpdatedOrders(){
+  const savedOrders= JSON.parse(localStorage.getItem('orders'))|| []; 
+  console.log('saved orders',savedOrders);
+  orders.push(...savedOrders)
+  console.log('orders after adding saved orders',orders)
+  return orders;
+}
 
 export async function renderPaymentSummary(){
   let productPriceCents = 0;
@@ -61,21 +76,19 @@ const paymentSummaryHTML = `
         `
         
         document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
-
-       async  function sendCreateRequest(){
-          const response= await fetch('https://supersimplebackend.dev/orders', {
-            method: 'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({cart : cart}) })
-            const currentOrder = await response.json();
-           await orders.unshift(currentOrder)
-            localStorage.setItem('order', JSON.stringify(orders))
-        }
-       
 document.querySelector('.js-place-order-button').addEventListener('click', async  ()=>{
-          await sendCreateRequest();
-          window.location.href= 'orders.html'
-      })
+       
+        const response= await fetch('https://supersimplebackend.dev/orders', {
+        method: 'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({cart : cart}) })
+        const newOrder = await response.json();
+        await updateOrders(newOrder);
+       window.location.href= 'orders.html'
+        
+        
 
+})
 
 }
+
