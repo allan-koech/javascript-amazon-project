@@ -3,19 +3,12 @@ import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.j
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js"
 
-const orders= [];
+const orders= JSON.parse(localStorage.getItem('orders'))|| [];
 async function updateOrders(newOrder){
-  console.log('origianal orders',orders)
-  console.log('order to be added',newOrder)
   orders.unshift(newOrder); 
-  console.log('new orders array',orders)
   localStorage.setItem('orders', JSON.stringify(orders))
 }
 export async function getUpdatedOrders(){
-  const savedOrders= JSON.parse(localStorage.getItem('orders'))|| []; 
-  console.log('saved orders',savedOrders);
-  orders.push(...savedOrders)
-  console.log('orders after adding saved orders',orders)
   return orders;
 }
 
@@ -84,7 +77,8 @@ document.querySelector('.js-place-order-button').addEventListener('click', async
         body: JSON.stringify({cart : cart}) })
         const newOrder = await response.json();
         await updateOrders(newOrder);
-       window.location.href= 'orders.html'
+        getUpdatedOrders()
+        window.location.href= 'orders.html'
         
         
 
